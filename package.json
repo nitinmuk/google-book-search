@@ -1,5 +1,5 @@
 {
-  "name": "mern",
+  "name": "google-book-search",
   "version": "1.0.0",
   "description": "Mern Demoan application to query google book API to view and save searched books",
   "main": "server.js",
