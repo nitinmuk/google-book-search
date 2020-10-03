@@ -1,10 +1,11 @@
 import React from "react";
 import Header from "../../components/Header";
+import Title from "../../components/Title";
 const Search = () => {
     return (
         <div>
             <Header/>
-            Search
+            <Title/>
         </div>
     );
 }
