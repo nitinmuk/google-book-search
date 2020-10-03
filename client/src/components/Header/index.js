@@ -6,7 +6,7 @@ const Header = () => {
     const [activeItem, setActiveItem] = useState();
     const handleItemClick = (e, { name }) => setActiveItem({ activeItem: name });
     return (
-        <Menu>
+        <Menu color="blue" inverted fluid>
             <Menu.Item header>Google Books</Menu.Item>
             <Menu.Item
                 as={Link} to="/search"
