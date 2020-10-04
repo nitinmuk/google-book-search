@@ -2,7 +2,6 @@ import React from "react";
 import { Button, Card, Container, Image, Grid } from "semantic-ui-react";
 
 const SearchResults = ({ books }) => {
-    console.log(books);
     if (books && books.length) {
         return (
             <Container>
