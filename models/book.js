@@ -11,6 +11,10 @@ const BookSchema = new Schema({
     type: String,
     trim: true
   },
+  subtitle: {
+    type: String,
+    trim: true
+  },
   authors: [AuthorSchema],
   description: String,
   image: {
