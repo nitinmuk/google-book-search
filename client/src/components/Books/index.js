@@ -1,32 +1,23 @@
 import React from "react";
-import { Button, Card, Container, Image, Grid } from "semantic-ui-react";
+import { Button, Card, Image, Grid, Icon } from "semantic-ui-react";
 
-const SearchResults = ({ books, saveBook, disableSave }) => {
-    if (books && books.length) {
-        return (
-            <Container>
-                <h3>Searched Books</h3>
-                <Card.Group>
-                    {getCards(books, saveBook, disableSave)}
-                </Card.Group>
-            </Container>
-        );
-    }
-    else {
-        return (<div></div>);
-    }
+const Books = (props) => {
+    return (
+        <Card.Group>
+            {getCards(props)}
+        </Card.Group>
+    );
 }
-
 /**
  * returns an array of cards where each book from book array is mapped
  * to one of the cards.
  * @param {array of books to render} books 
  */
-function getCards(books, saveBook, disableSave) {
+function getCards({ books, onClickHandler, disableButton, pageType }) {
     if (books && books.length) {
         const cards = books.map(book => {
             return (
-                <Card fluid key={book.id}>
+                <Card fluid key={book.id ? book.id : book._id}>
                     <Card.Content>
                         <Grid>
                             <Grid.Row>
@@ -37,7 +28,7 @@ function getCards(books, saveBook, disableSave) {
                                 </Grid.Column>
                             </Grid.Row>
                             <Grid.Column width={3}>
-                                <Image floated="left" size="small" src={book.image} />
+                                {getBookImage(book.image)}
                             </Grid.Column>
                             <Grid.Column width={13} textAlign="justified">
                                 <Card.Description as="p">{book.description}</Card.Description>
@@ -46,14 +37,54 @@ function getCards(books, saveBook, disableSave) {
                     </Card.Content>
                     <Card.Content extra>
                         <div className="ui two buttons">
-                            <Button color="green" disable={disableSave.saveButtonState} onClick={() => saveBook(book.id)}>Save</Button>
+                            {getSaveOrDeleteButton(pageType, disableButton, book, onClickHandler)}
                             <Button as="a" href={book.link} target="_blank" rel="noopener noreferrer" color="yellow">View</Button>
+
                         </div>
                     </Card.Content>
                 </Card>
             )
         });
         return cards;
+    }
+}
+/**
+ * returns either the save or delete button based on which page is being rendered.
+ * @param {type of page being rendered currently} pageType 
+ * @param {if to disable button} disableButton 
+ * @param {book corresponding to current card} book 
+ * @param {function to handle the click on the button} onClickHandler 
+ */
+function getSaveOrDeleteButton(pageType, disableButton, book, onClickHandler) {
+    switch (pageType) {
+        case "Search":
+            return (
+                <Button color="green" disable={disableButton.saveButtonState} onClick={() => onClickHandler(book.id)}>Save</Button>
+            );
+        case "Saved":
+            return (
+                <Button color="red" disable={disableButton.deleteButtonState} onClick={() => onClickHandler(book._id)}>Delete</Button>
+            )
+        default:
+            return;
+    }
+
+}
+
+/**
+ *if url defined then render same otherwise render a book icon 
+ * @param {book image url} url 
+ */
+function getBookImage(url) {
+    if (url) {
+        return (
+            <Image floated="left" size="small" src={url} />
+        );
+    }
+    else {
+        return (
+            <Icon size="massive" color="green" name="book" />
+        );
     }
 }
 /**
@@ -67,4 +98,4 @@ function getAuthorsNames(authors) {
     }
 }
 
-export default SearchResults;
+export default Books;
