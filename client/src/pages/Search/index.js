@@ -3,13 +3,13 @@ import Header from "../../components/Header";
 import Title from "../../components/Title";
 import SearchForm from "../../components/SearchForm";
 import API from "../../utils/API";
-import SearchResults from "../../components/SearchResults";
 import Footer from "../../components/Footer";
 import mappingUtil from "../../utils/mappingUtil";
+import BooksContainer from "../../components/BooksContainer";
 
 const Search = () => {
     const inputRef = useRef();
-    const [books, setBooks] = useState([]);
+    const [books, setBooks] = useState();
     const [searchButtonState, setSearchButtonState] = useState(false);
     const [saveButtonState, setSaveButtonState] = useState(false);
     /**
@@ -18,7 +18,7 @@ const Search = () => {
      * state
      */
     const handleSearchSubmit = async () => {
-        setBooks([]);
+        setBooks(undefined);
         const searchText = inputRef.current.value.trim();
         if (searchText !== "") {
             setSearchButtonState(true);
@@ -28,6 +28,10 @@ const Search = () => {
             inputRef.current.value = "";
         }
     }
+    /**
+     * handler to save book
+     * @param {book google id to save} id 
+     */
     const handleSaveBook = async (id) => {
         setSaveButtonState(true);
         const filteredBooks = books.filter((book) => book.id === id);
@@ -41,7 +45,7 @@ const Search = () => {
             <Header />
             <Title />
             <SearchForm onClick={handleSearchSubmit} ref={inputRef} disabled={searchButtonState} />
-            <SearchResults books={books} saveBook={handleSaveBook} disableSave={saveButtonState} />
+            <BooksContainer books={books} onClickHandler={handleSaveBook} disableButton={saveButtonState} pageType="Search" />
             <Footer />
         </div>
     );
