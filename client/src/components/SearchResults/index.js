@@ -1,13 +1,13 @@
 import React from "react";
 import { Button, Card, Container, Image, Grid } from "semantic-ui-react";
 
-const SearchResults = ({ books }) => {
+const SearchResults = ({ books, saveBook, disableSave }) => {
     if (books && books.length) {
         return (
             <Container>
                 <h3>Searched Books</h3>
                 <Card.Group>
-                    {getCards(books)}
+                    {getCards(books, saveBook, disableSave)}
                 </Card.Group>
             </Container>
         );
@@ -22,7 +22,7 @@ const SearchResults = ({ books }) => {
  * to one of the cards.
  * @param {array of books to render} books 
  */
-function getCards(books) {
+function getCards(books, saveBook, disableSave) {
     if (books && books.length) {
         const cards = books.map(book => {
             return (
@@ -31,23 +31,23 @@ function getCards(books) {
                         <Grid>
                             <Grid.Row>
                                 <Grid.Column>
-                                    <Card.Header textAlign="left"><strong>{book.volumeInfo.title}</strong></Card.Header>
-                                    <Card.Meta textAlign="left">{book.volumeInfo.subtitle}</Card.Meta>
-                                    <Card.Meta textAlign="left">written By: {getAuthorsNames(book.volumeInfo.authors)}</Card.Meta>
+                                    <Card.Header textAlign="left"><strong>{book.title}</strong></Card.Header>
+                                    <Card.Meta textAlign="left">{book.subtitle}</Card.Meta>
+                                    <Card.Meta textAlign="left">written By: {getAuthorsNames(book.authors)}</Card.Meta>
                                 </Grid.Column>
                             </Grid.Row>
                             <Grid.Column width={3}>
-                                <Image floated="left" size="small" src={book.volumeInfo.imageLinks.thumbnail} />
+                                <Image floated="left" size="small" src={book.image} />
                             </Grid.Column>
                             <Grid.Column width={13} textAlign="justified">
-                                <Card.Description as="p">{book.volumeInfo.description}</Card.Description>
+                                <Card.Description as="p">{book.description}</Card.Description>
                             </Grid.Column>
                         </Grid>
                     </Card.Content>
                     <Card.Content extra>
                         <div className="ui two buttons">
-                            <Button color="green">Save</Button>
-                            <Button as="a" href={book.volumeInfo.infoLink} target="_blank" rel="noopener noreferrer" color="yellow">View</Button>
+                            <Button color="green" disable={disableSave.saveButtonState} onClick={() => saveBook(book.id)}>Save</Button>
+                            <Button as="a" href={book.link} target="_blank" rel="noopener noreferrer" color="yellow">View</Button>
                         </div>
                     </Card.Content>
                 </Card>
