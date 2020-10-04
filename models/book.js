@@ -1,11 +1,5 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const AuthorSchema = new Schema({
-  name: {
-    type: String,
-    trim: true
-  }
-});
 const BookSchema = new Schema({
   title: {
     type: String,
@@ -15,7 +9,7 @@ const BookSchema = new Schema({
     type: String,
     trim: true
   },
-  authors: [AuthorSchema],
+  authors: [String],
   description: String,
   image: {
     type: String,
