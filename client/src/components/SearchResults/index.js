@@ -56,7 +56,11 @@ function getCards(books) {
         return cards;
     }
 }
-
+/**
+ * returns a comma separated string of authors
+ * corresponding to input authors array
+ * @param {array of book authors} authors 
+ */
 function getAuthorsNames(authors) {
     if (authors && authors.length) {
         return authors.reduce((authorList, author) => `${authorList}, ${author}`);
