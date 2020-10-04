@@ -4,6 +4,8 @@ import Title from "../../components/Title";
 import SearchForm from "../../components/SearchForm";
 import API from "../../utils/API";
 import SearchResults from "../../components/SearchResults";
+import Footer from "../../components/Footer";
+
 const Search = () => {
     const inputRef = useRef();
     const [books, setBooks] = useState([]);
@@ -30,6 +32,7 @@ const Search = () => {
             <Title />
             <SearchForm onClick={handleSearchSubmit} ref={inputRef} disabled={searchButtonState} />
             <SearchResults books={books}/>
+            <Footer/>
         </div>
     );
 }
