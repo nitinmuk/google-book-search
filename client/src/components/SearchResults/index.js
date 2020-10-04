@@ -15,9 +15,13 @@ const SearchResults = ({ books }) => {
     else {
         return (<div></div>);
     }
-
 }
 
+/**
+ * returns an array of cards where each book from book array is mapped
+ * to one of the cards.
+ * @param {array of books to render} books 
+ */
 function getCards(books) {
     if (books && books.length) {
         const cards = books.map(book => {
@@ -39,7 +43,6 @@ function getCards(books) {
                                 <Card.Description as="p">{book.volumeInfo.description}</Card.Description>
                             </Grid.Column>
                         </Grid>
-
                     </Card.Content>
                     <Card.Content extra>
                         <div className="ui two buttons">
