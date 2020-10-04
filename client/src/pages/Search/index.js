@@ -8,6 +8,11 @@ const Search = () => {
     const inputRef = useRef();
     const [books, setBooks] = useState([]);
     const [searchButtonState, setSearchButtonState] = useState(false);
+    /**
+     * once user submit search request, it will trigger search
+     * API request to fetch searched books and set it as component
+     * state
+     */
     const handleSearchSubmit = async () => {
         setBooks([]);       
         const searchText = inputRef.current.value.trim();
