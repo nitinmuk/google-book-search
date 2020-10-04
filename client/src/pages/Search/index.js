@@ -18,27 +18,37 @@ const Search = () => {
      * state
      */
     const handleSearchSubmit = async () => {
-        setBooks(undefined);
-        const searchText = inputRef.current.value.trim();
-        if (searchText !== "") {
-            setSearchButtonState(true);
-            const searchedBooks = await API.searchBooks(searchText);
-            setBooks(searchedBooks.data.map(book => mappingUtil.mapGoogleBook(book)));
-            setSearchButtonState(false);
-            inputRef.current.value = "";
+        try {
+            setBooks(undefined);
+            const searchText = inputRef.current.value.trim();
+            if (searchText !== "") {
+                setSearchButtonState(true);
+                const searchedBooks = await API.searchBooks(searchText);
+                setBooks(searchedBooks.data.map(book => mappingUtil.mapGoogleBook(book)));
+                setSearchButtonState(false);
+                inputRef.current.value = "";
+            }
+        } catch (error) {
+            console.log("Error: ", error);
         }
+
     }
     /**
      * handler to save book
      * @param {book google id to save} id 
      */
     const handleSaveBook = async (id) => {
-        setSaveButtonState(true);
-        const filteredBooks = books.filter((book) => book.id === id);
-        if (filteredBooks && filteredBooks.length) {
-            await API.saveBooks(filteredBooks[0]);
+        try {
+            setSaveButtonState(true);
+            const filteredBooks = books.filter((book) => book.id === id);
+            if (filteredBooks && filteredBooks.length) {
+                await API.saveBooks(filteredBooks[0]);
+            }
+            setSaveButtonState(false);
+        } catch (error) {
+            console.log("Error", error);
         }
-        setSaveButtonState(false);
+        
     }
     return (
         <div>
