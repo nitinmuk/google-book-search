@@ -3,23 +3,19 @@ import BooksContainer from "../../components/BooksContainer";
 import Header from "../../components/Header";
 import Title from "../../components/Title";
 import API from "../../utils/API";
+import Footer from "../../components/Footer";
 
 const Saved = () => {
     const [savedBooks, setSavedBooks] = useState();
     const [deleteButtonState, setDeleteButtonState] = useState(false);
 
     useEffect(() => {
-        loadBooks()
-    }, []);
-
-    // Loads all books and sets them to books
-    function loadBooks() {
-        API.getBooks()
-            .then(response =>
-                setSavedBooks(response.data)
-            )
-            .catch(err => console.log(err));
-    };
+        async function loadBooks() {
+            const response = await API.getBooks();
+            setSavedBooks(response.data);
+        }
+        loadBooks();
+    }, [setSavedBooks]);
 
     /**
      * handles delete button event to delete book
@@ -36,6 +32,7 @@ const Saved = () => {
             <Header />
             <Title />
             <BooksContainer books={savedBooks} onClickHandler={handleDeleteBook} disableButton={deleteButtonState} pageType="Saved" />
+            <Footer/>
         </div>
 
     );
