@@ -21,6 +21,7 @@ const Search = () => {
     const handleSearchSubmit = async () => {
         try {
             setBooks(undefined);
+            setSearchErrorState(false);
             const searchText = inputRef.current.value.trim();
             if (searchText !== "") {
                 setSearchButtonState(true);

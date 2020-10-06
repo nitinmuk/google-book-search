@@ -8,14 +8,18 @@ import Footer from "../../components/Footer";
 const Saved = () => {
     const [savedBooks, setSavedBooks] = useState();
     const [deleteButtonState, setDeleteButtonState] = useState(false);
+    const [savedErrorState, setSavedErrorState] = useState(false);
 
     useEffect(() => {
         async function loadBooks() {
             try {
+                setSavedErrorState(false);
                 const response = await API.getBooks();
-                setSavedBooks(response.data);
+                response.status === 200 ?
+                    setSavedBooks(response.data) : setSavedErrorState(true);
             } catch (error) {
                 console.log("Error: ", error);
+                setSavedErrorState(true);
             }
         }
         loadBooks();
@@ -28,19 +32,27 @@ const Saved = () => {
     const handleDeleteBook = async (id) => {
         try {
             setDeleteButtonState(true);
-            await API.deleteBooks(id);
-            setSavedBooks(savedBooks.filter(book => book._id !== id));
+            setSavedErrorState(false);
+            const response = await API.deleteBooks(id);
+            response.status === 204
+                ? setSavedBooks(savedBooks.filter(book => book._id !== id)) : setSavedErrorState(true);
             setDeleteButtonState(false);
         } catch (error) {
             console.log("Error: ", error);
+            setSavedErrorState(true);
         }
-        
+
     }
     return (
         <div>
             <Header />
             <Title />
-            <BooksContainer books={savedBooks} onClickHandler={handleDeleteBook} disableButton={deleteButtonState} pageType="Saved" />
+            <BooksContainer
+                books={savedBooks}
+                onClickHandler={handleDeleteBook}
+                disableButton={deleteButtonState}
+                pageType="Saved"
+                error={savedErrorState} />
             <Footer />
         </div>
 
