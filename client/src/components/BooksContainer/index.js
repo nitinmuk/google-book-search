@@ -6,10 +6,9 @@ const BooksContainer = (props) => {
     if (props.books) {
         if(props.books.length){
             return (
-                <Container>
-                    <h3>{props.pageType==="Search" ? "Search Results" : "Saved Books"}</h3>
-                    <Books {...props}/>
-                    
+                <Container fluid style={{padding:"30px", backgroundColor:"#2185d0"}}>
+                    <h3 style={{textAlign:"left", color:"white"}}>{props.pageType==="Search" ? "Search Results" : "Saved Books"}</h3>
+                    <Books {...props}/>                    
                 </Container>
             );
         }
