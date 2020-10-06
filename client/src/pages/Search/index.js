@@ -12,6 +12,7 @@ const Search = () => {
     const [books, setBooks] = useState();
     const [searchButtonState, setSearchButtonState] = useState(false);
     const [saveButtonState, setSaveButtonState] = useState(false);
+    const [searchErrorState, setSearchErrorState] = useState(false);
     /**
      * once user submit search request, it will trigger search
      * API request to fetch searched books and set it as component
@@ -24,11 +25,18 @@ const Search = () => {
             if (searchText !== "") {
                 setSearchButtonState(true);
                 const searchedBooks = await API.searchBooks(searchText);
-                setBooks(searchedBooks.data.map(book => mappingUtil.mapGoogleBook(book)));
-                setSearchButtonState(false);
-                inputRef.current.value = "";
+                if (searchedBooks.data && searchedBooks.data.length) {
+                    setBooks(searchedBooks.data.map(book => mappingUtil.mapGoogleBook(book)));
+                }
+                else {
+                    searchedBooks.status === 200 ? setBooks([]) : setSearchErrorState(true);
+                }
             }
-        } catch (error) {
+            setSearchButtonState(false);
+            inputRef.current.value = "";
+        }
+        catch (error) {
+            setSearchErrorState(true);
             console.log("Error: ", error);
         }
 
@@ -48,14 +56,22 @@ const Search = () => {
         } catch (error) {
             console.log("Error", error);
         }
-        
+
     }
     return (
         <div>
             <Header />
             <Title />
-            <SearchForm onClick={handleSearchSubmit} ref={inputRef} disabled={searchButtonState} />
-            <BooksContainer books={books} onClickHandler={handleSaveBook} disableButton={saveButtonState} pageType="Search" />
+            <SearchForm
+                onClick={handleSearchSubmit}
+                ref={inputRef}
+                disabled={searchButtonState} />
+            <BooksContainer
+                books={books}
+                onClickHandler={handleSaveBook}
+                disableButton={saveButtonState}
+                pageType="Search"
+                error={searchErrorState} />
             <Footer />
         </div>
     );
