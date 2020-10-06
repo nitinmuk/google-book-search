@@ -15,7 +15,7 @@ const BooksContainer = (props) => {
         }
         else {
             return (
-                <Container className="bookContainer">
+                <Container fluid className="bookContainer">
                     <h4>{props.pageType === "Search" ? "Unable To Find Any Book. Please try some other search text." : "No book is currently saved."}</h4>
                 </Container>
             );
