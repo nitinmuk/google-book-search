@@ -18,12 +18,17 @@ const Alert = ({bookTitle, action, status, openModal, handleModalClose}) => {
         </Modal>
     );
 }
+/**
+ * prepares an informative message for user based on operation status 
+ * and user action
+ * @param {contains operation status, book title and action performed} param
+ */
 function getModalDescription({status, bookTitle, action}) {
     if(status ==="Success!") {
         return `${bookTitle} has been ${action==="save" ? "saved" : "deleted" } successfully.`
     }
     else {
-        return `Failed to ${action} ${bookTitle}. Please try again.`
+        return `Failed to perform ${action} action for ${bookTitle}. Please try again.`
     }
 }
 
