@@ -63,7 +63,7 @@ function getSaveOrDeleteButton(pageType, disableButton, book, onClickHandler) {
             );
         case "Saved":
             return (
-                <Button color="red" disable={disableButton.deleteButtonState} onClick={() => onClickHandler(book._id)}>Delete</Button>
+                <Button color="red" disable={disableButton.deleteButtonState} onClick={() => onClickHandler(book._id,book.title)}>Delete</Button>
             )
         default:
             return;
