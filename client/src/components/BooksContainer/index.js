@@ -24,7 +24,7 @@ const BooksContainer = (props) => {
     else {
         if (props.error) {
             return (
-                <Container className="bookContainer">
+                <Container fluid className="bookContainer">
                     <h4>We are facing technical issues currently. Please try again. Sorry for inconvenience.</h4>
                 </Container>
             );
